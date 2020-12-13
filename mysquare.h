@@ -45,6 +45,7 @@ private:
 public:
     CCircle(); // конструктор
     CCircle(QRectF Rect, QPen Pen, QBrush Brush); // конструктор с параметрами, принимающий фигуру, обрисовку и кисть
+
     QRectF boundingRect() const override; // отрисовка рабочей матрицы для фигуры
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override; // отрисовщик фигур
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) override; // выделение при двойном нажатии
@@ -64,6 +65,7 @@ private:
 public:
     CRect(); // конструктор
     CRect(QRectF Rect, QPen Pen, QBrush Brush); // конструктор с параметрами, принимающий фигуру, обрисовку и кисть
+
     QRectF boundingRect() const override; // отрисовка рабочей матрицы для фигуры
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override; // отрисовщик фигур
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) override; // выделение при двойном нажатии
@@ -116,5 +118,32 @@ public:
     OutputFile(string namefile); // конструктор задающий название файла
     void Open(); // извлекает данные из файла
     string getShapes(); // возвращает фигуру
+};
+
+class Composite : public MySquare {
+private:
+    SimpleVector<MySquare*> c;
+public:
+    Composite() {
+
+    };
+    SimpleVector<MySquare*> &getGroup() {
+         return this->c;
+    }
+    void addToGroup(MySquare* p) {
+        c.push_back(p);
+    }
+
+    QRectF boundingRect() const override {}; // отрисовка рабочей матрицы для фигуры
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override {}; // отрисовщик фигур
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) override {}; // выделение при двойном нажатии
+    void setBrush(QBrush brush) override { nullptr; }; // установить кисть заливки
+    string whatThis() override {}; // возвращает тип фигуры
+    bool ThisAlloc() override {}; // отрисовка фигур
+
+    virtual ~Composite() {
+      for(int i = 0; i < c.size(); ++i)
+          delete c[i];
+    }
 };
 #endif // MYSQUARE_H

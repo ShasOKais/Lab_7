@@ -103,7 +103,7 @@ void MainWindow::keyPressEvent(QKeyEvent *d) // при нажатии клави
         scene->update();
         repaint();
     }
-    if(d->key() == Qt::Key_W){ // при нажатии "W" - перемещает выделенные фигуры вверх
+    if(d->key() == Qt::Key_W){ // при нажатии "Ц" - перемещает выделенные фигуры вверх
         for(int i = stor.size() - 1; i >= 0; i--){
             if(stor[i]->ThisAlloc()){
                 QPointF a = stor[i]->pos();
@@ -203,4 +203,17 @@ void MainWindow::on_pushButton_Out_clicked() // извлекает из файл
     for(int j = 0; j < s[1] - '0'; j++){
         CreateRectangle(rect, pen, br);
     }
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    Composite* group = new Composite;
+    for(int i = 0; i < stor.size(); i++){
+        if(stor[i]->ThisAlloc()){
+            group->addToGroup(stor[i]);
+            stor.Delete(i);
+            i--;
+        }
+    }
+    stor.push_back(group);
 }

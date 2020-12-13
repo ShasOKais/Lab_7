@@ -38,6 +38,8 @@ private slots:
     void on_pushButton_Out_clicked(); // извлекает фигуры из файла
     void CreateCircle(QRectF rect, QPen pen, QBrush br); // создает круг
     void CreateRectangle(QRectF rect, QPen pen, QBrush br); // создает квадрат
+    void on_pushButton_clicked();
+
 private:
     SimpleVector<MySquare*>stor; // хранилище фигур
     QGraphicsScene *scene; // инициализация сцены
